@@ -1,0 +1,5 @@
+name: SafePortals
+description: Ensures the nether portals created are always inside the vanilla WorldBorder
+main: eu.carrade.amaury.SafePortals.SafePortals
+version: 1.0
+author: "Amaury Carrade"
