@@ -33,15 +33,21 @@ public final class PortalsListener implements Listener {
 		// generation of a new portal, inside this border.
 		// ev.getTo() is already the good location for this portal.
 		if(!SafePortalsUtils.isInsideBorder(destination)) {
-			travelAgent.createPortal(ev.getTo());
-			
-			// The getTo() location may not be safe.
-			Location safeTo = SafePortalsUtils.searchSafeSpot(ev.getTo());
-			if(safeTo != null) {
-				ev.setTo(safeTo);
+			Boolean success = travelAgent.createPortal(ev.getTo());
+
+			if(success) {
+				ev.setTo(travelAgent.findPortal(ev.getTo()));
+
+				// The portal exact location returned by the portal agent may not be safe.
+				if (!SafePortalsUtils.isSafeSpot(ev.getTo())) {
+					Location safeTo = SafePortalsUtils.searchSafeSpot(ev.getTo());
+					if (safeTo != null) {
+						ev.setTo(safeTo);
+					}
+				}
 			}
 		}
-		
+
 		else {
 			ev.setTo(destination);
 		}
